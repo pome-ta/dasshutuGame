@@ -4,17 +4,37 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <title>脱出ゲーム</title>
-<link type="text/css" rel="stylesheet" href="./style.css">
 <style>
-  /* CSS styles here... */
+body {
+background: blue;
+width: 100%;
+height: 100%;
+margin: 0;
+padding: 0;
+}
+.wrap {
+background: red;
+}
+
 </style>
 </head>
   
-<body>
-  
-<h1>Hello</h1>
+<body> 
+<div class="wrap">
+
+  <div id="num">第一問</div>
+  <button type="button">キャンセル</button>
+  <div id="qword">まるまるまるまる</div>
+  <input type="text"></input>
+  <button type="submit">決定</button>
+  <div id="abst">ほげほげほげ</div>
+
+</div>
 <script>
 'use strict';
+let question = {
+  num = "第○問",
+}
 </script>
 </body>
   
