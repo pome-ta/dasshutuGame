@@ -85,7 +85,7 @@ let user = {
   name,  // name:name と同じ
   age: 30
 };
-
+```
 
 #### `for` ループで探索
 js の`for` より、Python ぽいね🤗
@@ -97,6 +97,7 @@ let user = {
   age: 30,
   isAdmin: true
 };
+
 for(let key in user) {
   // keys
   alert( key );  // name, age, isAdmin
