@@ -97,7 +97,6 @@ let user = {
   age: 30,
   isAdmin: true
 };
-
 for(let key in user) {
   // keys
   alert( key );  // name, age, isAdmin
@@ -105,6 +104,7 @@ for(let key in user) {
   alert( user[key] ); // John, 30, true
 }
 ```
+
 
 #### オブジェクトの順序付け
 `"n": hoge`と数字をつけると、順序付けができる
