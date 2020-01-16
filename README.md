@@ -15,9 +15,7 @@
 
 多分、テンプレの箱作って、その中の要素を書き換えだから上手く機能すると、思うのよね
 
-### 基本
-
-> [オブジェクト : 基本 【 ja.javascript.info 】](https://ja.javascript.info/object)
+### [オブジェクト 【 ja.javascript.info 】](https://ja.javascript.info/object)
 
 
 #### 要素
@@ -148,5 +146,132 @@ Object.assign(user, permissions1, permissions2);
 
 // now user = { name: "John", canView: true, canEdit: true }
 ```
+
+### [ガベージコレクション 【 ja.javascript.info 】](https://ja.javascript.info/garbage-collection)
+省略
+
+### [オブジェクトメソッド, `this` 【 ja.javascript.info 】](https://ja.javascript.info/object-methods)
+
+
+ちょー単純には、Python の`self` の認識かな？🤗
+
+
+オブジェクト指定を、直接名指しでもええけど別変数名になった時に死ぬ ☠️
+
+
+同じ関数でも、違う`this` を呼び出す可能性がある
+
+``` sample.js
+let user = { name: "John" };
+let admin = { name: "Admin" };
+
+function sayHi() {
+  alert( this.name );
+}
+
+// 2つのオブジェクトで同じ関数を使う
+user.f = sayHi;
+admin.f = sayHi;
+
+// これらの呼び出しは異なる this を持ちます
+// 関数の中の "this" は "ドット" の前のオブジェクトです
+user.f(); // John  (this == user)
+admin.f(); // Admin  (this == admin)
+
+admin['f'](); // Admin (ドットでも角括弧でも問題なくメソッドにアクセスできます)
+```
+
+
+#### `this` を見逃す可能性
+
+``` sample.js
+let user = {
+  name: "John",
+  hi() { alert(this.name); },
+  bye() { alert("Bye"); }
+};
+
+user.hi(); // John (シンプルな呼び出しは動作します)
+
+// 今、name に応じて user.hi または user.bye を読んでみましょう
+(user.name == "John" ? user.hi : user.bye)(); // Error!
+```
+
+これは、動く 🙆‍♂️
+
+``` sample.js
+user.hi();
+```
+
+これは、ダメ🙅‍♂️ (評価されたメソッド)
+
+``` sample.js
+(user.name == "John" ? user.hi : user.bye)(); // Error!
+```
+
+##### 評価後に、`this` を見失わないためには
+
+`obj.method()` 呼び出される機能の理解が大事
+
+1. `.` が、`obj.method` を抽出
+1. `()` で、'それ' を実行
+
+つまり
+
+``` sample.js
+let hi = user.hi;
+hi(); // Error, this は undefined なので
+```
+
+<small>無理やり`()` つけたら、動いたぽいけども、ダメなんかな？ 🤔</small>
+
+
+##### アロー関数は、`this` を持たない
+
+外部の`this` とか、呼び出せるんだって 🤗 知らんけど
+
+
+
+### [コンストラクタ 演算子 `new` 【 ja.javascript.info 】](https://ja.javascript.info/constructor-new)
+
+
+コンストラクタ関数
+    1. 先頭大文字で名付け
+    1. `new` 演算子を使い実行
+
+
+``` sample.js
+function User(name) {
+  this.name = name;
+  this.isAdmin = false;
+}
+
+let user = new User("Jack");
+
+alert(user.name); // Jack
+alert(user.isAdmin); // false
+```
+
+`new User(...)` が呼び出された時の動き
+    1. 新しい空のオブジェクトが作られ、`this` に代入
+    1. 関数本体を実行
+        - 通常は
+            - `this` を変更
+            - 新しいプロパティを追加
+    1. `this` の値を返却
+
+
+``` sample.js
+function User(name) {
+  // this = {};  (暗黙)
+
+  // this へプロパティを追加
+  this.name = name;
+  this.isAdmin = false;
+
+  // return this;  (暗黙)
+}
+```
+
 
 
